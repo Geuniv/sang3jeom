@@ -147,11 +147,25 @@ export const imageAPIService = {
   // S3 프리사인드 URL 생성
   async getPresignedUrl(fileName, fileType) {
     try {
-      const response = await imageAPI.post('/api/images/presigned-url', {
-        filename: fileName,  // 백엔드에서 'filename'으로 받고 있음
-        fileType
+      // reviewAPI의 baseURL에서 /api/reviews 부분을 제거하고 /api/images로 변경
+      const imageServiceUrl = reviewAPI.defaults.baseURL.replace('/api/reviews', '');
+      const response = await fetch(`${imageServiceUrl}/api/images/presigned-url`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({
+          filename: fileName,
+          fileType
+        })
       });
-      return response.data;
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return await response.json();
     } catch (error) {
       console.error('프리사인드 URL 생성 실패:', error);
       throw error;
@@ -201,8 +215,8 @@ export const imageAPIService = {
       const presignedUrl = await this.getPresignedUrl(fileName, file.type);
       console.log('프리사인드 URL 생성 완료:', presignedUrl);
       
-      // 3. S3에 업로드 (응답이 문자열인 경우 직접 사용)
-      const uploadUrl = typeof presignedUrl === 'string' ? presignedUrl : presignedUrl.presignedUrl || presignedUrl.url;
+      // 3. S3에 업로드 (리뷰 서비스는 JSON 객체로 반환)
+      const uploadUrl = presignedUrl.presignedUrl || presignedUrl;
       const imageUrl = await this.uploadImageToS3(uploadUrl, file);
       console.log('S3 업로드 완료:', imageUrl);
       

@@ -68,14 +68,21 @@ export default function CharacterMaker({ onDone }) {
         }
       });
     if (res.status === 200) {
-        const data = res.data;
-        setAiImageCount(data.length);
-        console.log("현재 AI 이미지 개수:", data.length);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setAiImageCount(data.length);
+          console.log("현재 AI 이미지 개수:", data.length);
+        } else {
+          console.error("서버 응답이 배열이 아닙니다:", data);
+          setAiImageCount(0);
+        }
       } else {
         console.error("AI 이미지 개수 확인 실패:", res.status);
+        setAiImageCount(0);
       }
     } catch (error) {
       console.error("AI 이미지 개수 확인 오류:", error);
+      setAiImageCount(0);
     } finally {
       setIsCheckingImageCount(false);
     }
