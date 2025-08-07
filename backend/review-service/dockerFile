@@ -1,4 +1,4 @@
-# Build stage
+# Build stage (리뷰서비스)
 FROM gradle:8.5-jdk17 AS build
 WORKDIR /app
 COPY build.gradle settings.gradle ./

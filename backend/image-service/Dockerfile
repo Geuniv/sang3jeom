@@ -2,7 +2,7 @@ FROM python:3.10
 
 WORKDIR /app
 
-# image-service 파일 복사
+# image-service 파일 복사 (이미지서비스)
 COPY backend/image-service/ . 
 
 # scripts 복사 (Dockerfile 기준 상대경로)
