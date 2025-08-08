@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: dev
+  labels: { app: user-service }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: user-service } }
+  template:
+    metadata: { labels: { app: user-service } }
+    spec:
+      nodeSelector: { "eks.amazonaws.com/nodegroup": "app" }
+      containers:
+      - name: user-service
+        image: ${ECR}/sang3jeom/user-service:latest
+        ports: [ { containerPort: 8080 } ]
+        env:
+        - name: RDS_ENDPOINT
+          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: RDS_ENDPOINT } }
+        - name: RDS_DB_NAME
+          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: RDS_DB_NAME } }
+        - name: DATASOURCE_USERNAME
+          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: RDS_USERNAME } }
+        - name: DATASOURCE_PASSWORD
+          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: RDS_PASSWORD } }
+        readinessProbe: { httpGet: { path: /api-docs, port: 8080 }, initialDelaySeconds: 20, periodSeconds: 10 }
+        livenessProbe:  { httpGet: { path: /api-docs, port: 8080 }, initialDelaySeconds: 40, periodSeconds: 20 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: dev
+  labels: { app: user-service }
+spec:
+  selector: { app: user-service }
+  ports: [ { port: 8080, targetPort: 8080 } ]
+  type: ClusterIP 

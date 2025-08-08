@@ -187,7 +187,7 @@ services:
       - image_uploads:/app/uploads
       - image_outputs:/app/outputs
       - ./scripts:/scripts:rw
-    command: ["sh", "-c", "dos2unix /scripts/*.sh && sh /scripts/docker-start.sh image-service 8000"]
+    command: ["sh", "-c", "sh /scripts/docker-start.sh image-service 8000"]
     networks:
       - sang3jeom-network
     restart: unless-stopped
