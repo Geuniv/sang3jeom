@@ -88,8 +88,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         # working-directory를 동적으로 설정하여 해당 서비스 디렉토리에서 빌드
         run: |
-          docker build -t $ECR_REGISTRY/${{ env.SERVICE_NAME }}:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/${{ env.SERVICE_NAME }}:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG
         working-directory: ./B.E/${{ env.SERVICE_NAME }}
 
       # 6. Manifest 레포지토리 체크아웃
