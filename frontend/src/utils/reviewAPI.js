@@ -1,7 +1,8 @@
 import { createApiInstance } from './axiosInstance';
 
-const REVIEW_SERVICE_URL = 'http://localhost:8084/api/reviews';
-const IMAGE_SERVICE_URL = 'http://localhost:8000'; // Image service URL
+// 환경변수에서 API URL 가져오기
+const REVIEW_SERVICE_URL = (import.meta.env.VITE_REVIEW_SERVICE_URL || 'http://localhost:8084') + '/api/reviews';
+const IMAGE_SERVICE_URL = import.meta.env.VITE_IMAGE_SERVICE_URL || 'http://localhost:8000';
 
 // reviewAPI 인스턴스 생성
 const reviewAPI = createApiInstance(REVIEW_SERVICE_URL);

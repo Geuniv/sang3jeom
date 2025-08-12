@@ -23,10 +23,16 @@ import { useNavigate, Link } from 'react-router-dom';
 import ReviewModal from '../components/ReviewModal';
 import { useAuth } from "../utils/useAuth";
 
-const userServiceApi = createApiInstance('http://localhost:8080');
-const orderServiceApi = createApiInstance('http://localhost:8082');
-const communityServiceApi = createApiInstance('http://localhost:8083');
-const imageServiceApi = createApiInstance('http://localhost:8000');
+// 환경변수에서 API URL 가져오기
+const USER_SERVICE_URL = import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080';
+const ORDER_SERVICE_URL = import.meta.env.VITE_ORDER_SERVICE_URL || 'http://localhost:8082';
+const COMMUNITY_SERVICE_URL = import.meta.env.VITE_COMMUNITY_SERVICE_URL || 'http://localhost:8083';
+const IMAGE_SERVICE_URL = import.meta.env.VITE_IMAGE_SERVICE_URL || 'http://localhost:8000';
+
+const userServiceApi = createApiInstance(USER_SERVICE_URL);
+const orderServiceApi = createApiInstance(ORDER_SERVICE_URL);
+const communityServiceApi = createApiInstance(COMMUNITY_SERVICE_URL);
+const imageServiceApi = createApiInstance(IMAGE_SERVICE_URL);
 
 const MyPage = () => {
 

@@ -6,8 +6,10 @@ import Modal from "../components/Modal";
 import { getUserIdFromToken } from '../utils/jwtUtils';
 import { createApiInstance } from '../utils/axiosInstance';
 
-const userServiceApi = createApiInstance('http://localhost:8080');
-const orderServiceApi = createApiInstance('http://localhost:8082');
+const USER_SERVICE_URL = import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080';
+const ORDER_SERVICE_URL = import.meta.env.VITE_ORDER_SERVICE_URL || 'http://localhost:8082';
+const userServiceApi = createApiInstance(USER_SERVICE_URL);
+const orderServiceApi = createApiInstance(ORDER_SERVICE_URL);
 
 const OrderPage = () => {
   const location = useLocation();

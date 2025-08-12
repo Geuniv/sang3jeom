@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { createApiInstance } from '../utils/axiosInstance';
-
-const orderServiceApi = createApiInstance('http://localhost:8082');
+ 
+// 환경변수에서 API URL 가져오기
+const ORDER_SERVICE_URL = import.meta.env.VITE_ORDER_SERVICE_URL || 'http://localhost:8082';
+const orderServiceApi = createApiInstance(ORDER_SERVICE_URL);
 
 export default function PaySuccess() {
   const location = useLocation();

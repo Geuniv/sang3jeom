@@ -61,7 +61,7 @@ export default function CharacterMaker({ onDone }) {
         return;
       }
       
-  const res = await fetch(`http://localhost:8080/api/ai-images/user/${userId}`, {
+  const res = await fetch(`${(import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080')}/api/ai-images/user/${userId}`, {
         headers: { 
           "Authorization": `Bearer ${accessToken}`,
           "Content-Type": "application/json"
@@ -151,7 +151,7 @@ export default function CharacterMaker({ onDone }) {
     const prompt = `Draw a cute pet as a ${style} character.`;
     formData.append("prompt", prompt);
 
-    const res = await fetch("http://localhost:8000/generate-character", {
+    const res = await fetch(`${(import.meta.env.VITE_IMAGE_SERVICE_URL || 'http://localhost:8000')}/generate-character`, {
       method: "POST",
       body: formData,
     });
@@ -237,7 +237,7 @@ export default function CharacterMaker({ onDone }) {
     const formData = new FormData();
     formData.append("userId", userId);
     formData.append("file", file);
-    const res = await fetch("http://localhost:8080/api/ai-images", {
+    const res = await fetch(`${(import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080')}/api/ai-images`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${accessToken}`

@@ -39,6 +39,27 @@ spec:
             name: community-service
             port:
               number: 8083
+      - path: /goods-posts
+        pathType: Prefix
+        backend:
+          service:
+            name: community-service
+            port:
+              number: 8083
+      - path: /comments
+        pathType: Prefix
+        backend:
+          service:
+            name: community-service
+            port:
+              number: 8083
+      - path: /likes
+        pathType: Prefix
+        backend:
+          service:
+            name: community-service
+            port:
+              number: 8083
       - path: /order
         pathType: Prefix
         backend:
@@ -46,14 +67,28 @@ spec:
             name: order-service
             port:
               number: 8082
-      - path: /review
+      - path: /pay
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 8082
+      - path: /orders
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 8082
+      - path: /api/reviews
         pathType: Prefix
         backend:
           service:
             name: review-service
             port:
               number: 8084
-      - path: /image
+      - path: /generate-character
         pathType: Prefix
         backend:
           service:

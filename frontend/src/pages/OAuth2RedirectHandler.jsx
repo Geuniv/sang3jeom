@@ -22,7 +22,7 @@ const OAuth2RedirectHandler = () => {
         }
 
         // 3️⃣ 서버에 사용자 정보 요청 (쿠키 + 토큰 둘 다 가능)
-        const { data } = await axios.get('http://localhost:8080/users/me', {
+        const { data } = await axios.get(`${(import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080')}/users/me`, {
           withCredentials: true, // HttpOnly 쿠키 전송
           headers: {
             Authorization: `Bearer ${token}`, // ★ 백엔드에서 허용하면 헤더로도 보냄

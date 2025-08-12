@@ -5,12 +5,19 @@ import { MoreHorizontal, Heart, MessageCircle, Share2, Bookmark, X, Send, Lock }
 import PostUploadModal from '../components/PostUploadModal';
 import { getUserIdFromToken } from '../utils/jwtUtils';
 
-const userServiceApi = createApiInstance('http://localhost:8080');
-const communityServiceApi = createApiInstance('http://localhost:8083');
-const imageServiceApi = createApiInstance('http://localhost:8000');
-const orderServiceApi = createApiInstance('http://localhost:8082');
-const reaviewServiceApi = createApiInstance('http://localhost:8084');
-const goodsServiceApi = createApiInstance('http://localhost:8084');
+// 환경변수에서 API URL 가져오기
+const USER_SERVICE_URL = import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080';
+const COMMUNITY_SERVICE_URL = import.meta.env.VITE_COMMUNITY_SERVICE_URL || 'http://localhost:8083';
+const IMAGE_SERVICE_URL = import.meta.env.VITE_IMAGE_SERVICE_URL || 'http://localhost:8000';
+const ORDER_SERVICE_URL = import.meta.env.VITE_ORDER_SERVICE_URL || 'http://localhost:8082';
+const REVIEW_SERVICE_URL = import.meta.env.VITE_REVIEW_SERVICE_URL || 'http://localhost:8084';
+
+const userServiceApi = createApiInstance(USER_SERVICE_URL);
+const communityServiceApi = createApiInstance(COMMUNITY_SERVICE_URL);
+const imageServiceApi = createApiInstance(IMAGE_SERVICE_URL);
+const orderServiceApi = createApiInstance(ORDER_SERVICE_URL);
+const reaviewServiceApi = createApiInstance(REVIEW_SERVICE_URL);
+const goodsServiceApi = createApiInstance(REVIEW_SERVICE_URL);
 
 // 게시글 상세+댓글 모달
 function formatRelativeTime(dateString) {
