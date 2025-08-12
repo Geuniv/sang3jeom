@@ -32,7 +32,7 @@ jobs:
           # 변경된 파일 목록에서 서비스 이름 추출 (예: B.E/user-service/...)
           SERVICE_NAME=""
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [[ "$file" == B.E/* ]]; then
+            if [[ "$file" == backend/* ]]; then
               SERVICE_NAME=$(echo "$file" | cut -d'/' -f2)
               break # 첫 번째로 감지된 서비스 이름 사용
             fi
@@ -90,7 +90,7 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG .
           docker push $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG
-        working-directory: ./B.E/${{ env.SERVICE_NAME }}
+        working-directory: ./backend/${{ env.SERVICE_NAME }}
 
       # 6. Manifest 레포지토리 체크아웃
       - name: Checkout Manifest Repository
