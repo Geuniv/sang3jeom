@@ -14,7 +14,8 @@ import Navbar from '../components/Navbar';
 import { useAuth } from "../utils/useAuth";
 
 // 환경변수에서 API URL 가져오기 (Vite 방식)
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const oauth2Url = 'http://a0fa9acba723e43c6b9bd0a34daa589e-3b703a91ce113926.elb.ap-northeast-2.amazonaws.com';
 const authApi = createApiInstance(API_BASE_URL);
 
 const Login = () => {
