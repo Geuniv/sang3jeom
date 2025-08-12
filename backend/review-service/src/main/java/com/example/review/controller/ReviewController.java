@@ -40,6 +40,7 @@ public class ReviewController {
     public ResponseEntity<Void> createReview(
             @RequestHeader("Authorization") String token,
             @RequestBody ReviewRequestDTO requestDTO) {
+        log.info("CI 테스트");
         log.info("📝 [POST] 리뷰 생성 요청 | orderId: {} | rating: {}⭐", 
                 requestDTO.getOrderId(), requestDTO.getRating());
         
@@ -204,4 +205,5 @@ public class ReviewController {
                 userId, reviews.size());
         return ResponseEntity.ok(reviews);
     }
+
 }

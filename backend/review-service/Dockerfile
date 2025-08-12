@@ -1,3 +1,4 @@
+# Build stage (리뷰서비스)
 FROM gradle:8.5-jdk17 AS build
 WORKDIR /app
 COPY build.gradle settings.gradle ./
@@ -12,5 +13,5 @@ COPY --from=build /app/build/libs/*.jar app.jar
 # 한국 시간대 설정
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-EXPOSE 8083
+EXPOSE 8084
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker", "app.jar"] 
