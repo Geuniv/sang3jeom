@@ -36,12 +36,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. 프로덕션 빌드
+      # 4. 프로덕션 빌드 (EKS 환경변수 주입)
       - name: Build project
         run: npm run build
-        # REACT_APP_API_URL과 같은 환경변수가 필요하다면 여기에 추가
-        # env:
-        #   REACT_APP_API_URL: ${{ secrets.API_URL }}
+        env:
+          # EKS 로드밸런서 URL (GitHub Secrets에서 가져옴)
+          VITE_API_BASE_URL: ${{ secrets.EKS_ALB_URL }}
+          VITE_USER_SERVICE_URL: ${{ secrets.EKS_ALB_URL }}
+          VITE_COMMUNITY_SERVICE_URL: ${{ secrets.EKS_ALB_URL }}
+          VITE_ORDER_SERVICE_URL: ${{ secrets.EKS_ALB_URL }}
+          VITE_REVIEW_SERVICE_URL: ${{ secrets.EKS_ALB_URL }}
+          VITE_IMAGE_SERVICE_URL: ${{ secrets.EKS_ALB_URL }}
+          VITE_OAUTH2_BASE_URL: ${{ secrets.EKS_ALB_URL }}
+          
+          # 프론트엔드 URL
+          VITE_FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+          
+          # Feature Flags
+          VITE_ENABLE_OAUTH: true
+          VITE_ENABLE_SOCIAL_LOGIN: true
 
       # 5. AWS 자격 증명 구성
       - name: Configure AWS credentials

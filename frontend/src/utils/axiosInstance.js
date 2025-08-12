@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+// 환경변수에서 API URL 가져오기 (Vite 방식)
+const USER_SERVICE_URL = import.meta.env.VITE_USER_SERVICE_URL || 'http://localhost:8080';
+
 // 토큰 재발급 전용 axios 인스턴스 (항상 User Service로 요청)
 const refreshApi = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: USER_SERVICE_URL,
   withCredentials: true,
 });
 

@@ -13,7 +13,9 @@ import {
 import Navbar from '../components/Navbar';
 import { useAuth } from "../utils/useAuth";
 
-const authApi = createApiInstance('http://localhost:8080');
+// 환경변수에서 API URL 가져오기 (Vite 방식)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const authApi = createApiInstance(API_BASE_URL);
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -57,7 +59,8 @@ const handleSocialLogin = (provider) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+    const oauth2Url = import.meta.env.VITE_OAUTH2_BASE_URL || API_BASE_URL;
+    window.location.href = `${oauth2Url}/oauth2/authorization/${provider}`;
   };
 };
 

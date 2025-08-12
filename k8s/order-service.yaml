@@ -10,7 +10,7 @@ spec:
   template:
     metadata: { labels: { app: order-service } }
     spec:
-      nodeSelector: { "eks.amazonaws.com/nodegroup": "app" }
+      nodeSelector: { "eks.amazonaws.com/nodegroup": "s3j-node-app" }
       containers:
       - name: order-service
         image: ${ECR}/sang3jeom/order-service:latest

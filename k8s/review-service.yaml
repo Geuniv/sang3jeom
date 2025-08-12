@@ -10,7 +10,7 @@ spec:
   template:
     metadata: { labels: { app: review-service } }
     spec:
-      nodeSelector: { "eks.amazonaws.com/nodegroup": "app" }
+      nodeSelector: { "eks.amazonaws.com/nodegroup": "s3j-node-app" }
       containers:
       - name: review-service
         image: ${ECR}/sang3jeom/review-service:latest
@@ -24,6 +24,16 @@ spec:
           valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: RDS_USERNAME } }
         - name: DATASOURCE_PASSWORD
           valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: RDS_PASSWORD } }
+        - name: S3_BUCKET
+          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: S3_BUCKET } }
+        - name: S3_REGION
+          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: S3_REGION } }
+        - name: AWS_REGION
+          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: AWS_REGION } }
+        - name: AWS_ACCESS_KEY
+          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: AWS_ACCESS_KEY } }
+        - name: AWS_SECRET_KEY
+          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: AWS_SECRET_KEY } }           
 ---
 apiVersion: v1
 kind: Service
