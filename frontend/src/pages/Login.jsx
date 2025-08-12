@@ -59,7 +59,7 @@ const handleSocialLogin = (provider) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    // OAuth2도 같은 로드밸런서 URL 사용
+    // OAuth2도 같은 로드밸런서 URL 사용123123
     const oauth2Url = 'http://a0fa9acba723e43c6b9bd0a34daa589e-3b703a91ce113926.elb.ap-northeast-2.amazonaws.com';
     window.location.href = `${oauth2Url}/oauth2/authorization/${provider}`;
   };
