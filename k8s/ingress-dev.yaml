@@ -17,7 +17,7 @@ spec:
   rules:
   - http:
       paths:
-      # 루트 경로 추가 - /login 등의 요청을 user-service로 매핑
+      # 루트 경로 추가 - /login 등의 요청을 user-service로 매핑.
       - path: /
         pathType: Prefix
         backend:
