@@ -37,7 +37,8 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:3000",
         "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000"
+        "http://127.0.0.1:3000",
+        "http://sang3jeom-frontend.s3-website.ap-northeast-2.amazonaws.com" 
     ],
     allow_credentials=True,
     allow_methods=["*"],
