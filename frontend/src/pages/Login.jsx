@@ -39,7 +39,7 @@ const Login = () => {
          { withCredentials: true } 
       );
       const { accessToken, refreshToken } = res.data;
-      console.log(res.data); // 서버에서 반환된 JWT 토큰
+      console.log(res.data); // 서버에서 반환된 JWT 토큰11
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       sessionStorage.setItem('isLoggedIn', true);
