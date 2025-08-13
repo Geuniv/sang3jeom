@@ -16,6 +16,7 @@ load_dotenv()
 
 # HF_API_URL = os.getenv("HF_API_URL")
 # HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+# ci 테스트
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", "./uploads")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./outputs")
 
