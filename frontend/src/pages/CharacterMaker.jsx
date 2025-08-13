@@ -156,7 +156,15 @@ export default function CharacterMaker({ onDone }) {
       body: formData,
     });
     if (!res.ok) throw new Error("AI 변환 실패");
-    return await res.json();
+    
+    const contentType = res.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await res.json();
+    } else {
+      const text = await res.text();
+      console.error("응답이 JSON이 아닙니다:", text);
+      throw new Error("잘못된 응답 형식");
+    }
   }
 
     const handleSubmit = async (e) => {
