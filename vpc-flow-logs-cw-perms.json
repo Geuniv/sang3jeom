@@ -1,0 +1,18 @@
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Effect":"Allow",
+      "Action":[
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogGroups"
+      ],
+      "Resource":[
+        "arn:aws:logs:ap-northeast-2:806070027856:log-group:/vpcflow/*",
+        "arn:aws:logs:ap-northeast-2:806070027856:log-group:/vpcflow/*:log-stream:*"
+      ]
+    }
+  ]
+}
