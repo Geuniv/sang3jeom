@@ -31,7 +31,7 @@ public class ImageController {
             String presignedUrl = reviewImageService.getPresignedUrl(filename);
             log.info("S3 Presigned URL 생성 성공: {}", presignedUrl);
             
-            // JSON 응답 형식으로 반환
+            // JSON 응답 형식으로 반환 citest
             Map<String, String> response = Map.of(
                 "presignedUrl", presignedUrl,
                 "filename", filename
