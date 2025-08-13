@@ -47,9 +47,11 @@ jobs:
             exit 0
           fi
           
-          # JSON 배열로 출력
-          echo "services=$(printf '%s\n' "${SERVICES[@]}" | jq -R . | jq -s .)" >> $GITHUB_OUTPUT
+          # JSON 배열로 출력 (공백과 쉼표 문제 해결)
+          SERVICES_JSON=$(printf '%s\n' "${SERVICES[@]}" | jq -R . | jq -s . | tr -d ' \n')
+          echo "services=$SERVICES_JSON" >> $GITHUB_OUTPUT
           echo "Detected services: ${SERVICES[*]}"
+          echo "Services JSON: $SERVICES_JSON"
 
   # 결정된 서비스들을 병렬로 빌드하고, 이미지를 푸시하고, 매니페스트를 업데이트하는 작업
   build-and-update:
