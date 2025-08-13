@@ -14,18 +14,18 @@ import re
 
 load_dotenv()
 
-HF_API_URL = os.getenv("HF_API_URL")
-HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+# HF_API_URL = os.getenv("HF_API_URL")
+# HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", "./uploads")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./outputs")
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-HF_HEADERS = {
-    "Authorization": f"Bearer {HF_API_KEY}",
-    "Content-Type": "application/json"
-}
+# HF_HEADERS = {
+#     "Authorization": f"Bearer {HF_API_KEY}",
+#     "Content-Type": "application/json"
+# }
 
 app = FastAPI()
 
