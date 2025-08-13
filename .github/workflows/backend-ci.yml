@@ -106,9 +106,14 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           echo "Building ${{ env.SERVICE_NAME }} service..."
-          # 서비스 디렉토리로 이동하여 빌드 컨텍스트 설정
-          cd backend/${{ env.SERVICE_NAME }}
-          docker build -t $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG .
+          # image-service는 루트 디렉토리를 컨텍스트로 사용 (scripts 접근을 위해)
+          if [ "${{ env.SERVICE_NAME }}" = "image-service" ]; then
+            docker build -t $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG -f ./backend/${{ env.SERVICE_NAME }}/Dockerfile .
+          else
+            # 다른 서비스들은 서비스 디렉토리를 컨텍스트로 사용
+            cd backend/${{ env.SERVICE_NAME }}
+            docker build -t $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG .
+          fi
           echo "Pushing ${{ env.SERVICE_NAME }} service to ECR..."
           docker push $ECR_REGISTRY/sang3jeom/${{ env.SERVICE_NAME }}:$IMAGE_TAG
           echo "Successfully built and pushed ${{ env.SERVICE_NAME }} service"
