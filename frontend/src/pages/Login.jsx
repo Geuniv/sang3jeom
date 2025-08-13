@@ -13,7 +13,7 @@ import {
 import Navbar from '../components/Navbar';
 import { useAuth } from "../utils/useAuth";
 
-// 환경변수에서 API URL 가져오기 (Vite 방식)
+// 환경변수에서 API URL 가져오기 (Vite 방식)11
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 const authApi = createApiInstance(API_BASE_URL);
 
