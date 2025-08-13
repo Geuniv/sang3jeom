@@ -5,8 +5,8 @@ WORKDIR /app
 # 현재 디렉토리(image-service)의 모든 파일 복사
 COPY . .
 
-# scripts 디렉토리가 없다면 생성
-RUN mkdir -p scripts
+# 루트의 scripts 디렉토리 복사
+COPY ../scripts ./scripts
 
 # dos2unix 설치 & 스크립트 변환 & 실행권한 부여
 RUN apt-get update \
