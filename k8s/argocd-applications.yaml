@@ -1,0 +1,125 @@
+---
+# User Service ArgoCD Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sang3jeom-user-service
+  namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sang3jeom/k8s-manifest-repo.git
+    path: charts/user-service
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
+---
+# Order Service ArgoCD Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sang3jeom-order-service
+  namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sang3jeom/k8s-manifest-repo.git
+    path: charts/order-service
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
+---
+# Community Service ArgoCD Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sang3jeom-community-service
+  namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sang3jeom/k8s-manifest-repo.git
+    path: charts/community-service
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
+---
+# Review Service ArgoCD Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sang3jeom-review-service
+  namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sang3jeom/k8s-manifest-repo.git
+    path: charts/review-service
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
+---
+# Image Service ArgoCD Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sang3jeom-image-service
+  namespace: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sang3jeom/k8s-manifest-repo.git
+    path: charts/image-service
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true

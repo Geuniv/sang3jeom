@@ -128,15 +128,14 @@ jobs:
           token: ${{ secrets.MANIFEST_REPO_PAT }}
           path: k8s-manifest-repo
 
-      # 8. Helm values.yaml 파일 업데이트
-      - name: Install yq and update image tag
+      # 8. 직접 매니페스트 파일의 이미지 태그 업데이트 (Helm 차트 대신)
+      - name: Install yq and update image tag in manifest
         run: |
           sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
           sudo chmod +x /usr/bin/yq
-          # 동적으로 해당 서비스의 values.yaml 파일 경로를 지정하여 이미지 태그 업데이트
+          # 동적으로 해당 서비스의 매니페스트 파일 경로를 지정하여 이미지 태그 업데이트
           echo "Updating image tag for ${{ env.SERVICE_NAME }} service..."
-          yq e '.image.tag = "${{ env.IMAGE_TAG }}"' -i k8s-manifest-repo/charts/${{ env.SERVICE_NAME }}/values.yaml
-
+          yq e '.spec.template.spec.containers[0].image = "${{ steps.login-ecr.outputs.registry }}/sang3jeom/${{ env.SERVICE_NAME }}:${{ env.IMAGE_TAG }}"' -i k8s-manifest-repo/charts/${{ env.SERVICE_NAME }}/service.yaml
       # 9. Manifest 레포지토리에 변경사항 커밋 및 푸시
       - name: Commit and push manifest changes
         run: |
@@ -147,25 +146,8 @@ jobs:
           git commit -m "Update image to ${{ env.IMAGE_TAG }} for ${{ env.SERVICE_NAME }}"
           git push
           echo "Successfully updated manifest for ${{ env.SERVICE_NAME }} service"
+          echo "ArgoCD will automatically detect the changes and sync the application"
 
-      # 10. ArgoCD 동기화 (CD)
-      - name: Sync ArgoCD Applications
-        run: |
-          # ArgoCD CLI 설치
-          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-          chmod +x argocd-linux-amd64
-          
-          # ArgoCD 로그인 (경로 제거)
-          ARGOCD_URL="http://a0fa9acba723e43c6b9bd0a34daa589e-3b703a91ce113926.elb.ap-northeast-2.amazonaws.com"
-          echo "Using ArgoCD URL: $ARGOCD_URL"
-          
-          ./argocd-linux-amd64 login "$ARGOCD_URL" \
-            --username ${{ secrets.ARGOCD_USERNAME }} \
-            --password ${{ secrets.ARGOCD_PASSWORD }} \
-            --insecure
-          
-          # 변경된 서비스만 ArgoCD 동기화
-          echo "Syncing ${{ env.SERVICE_NAME }} service in ArgoCD..."
-          app_name="sang3jeom-${{ env.SERVICE_NAME }}"
-          ./argocd-linux-amd64 app sync $app_name --prune --timeout 300
-          echo "Successfully synced $app_name in ArgoCD"
+      # ArgoCD는 GitOps 방식으로 작동하므로, 
+      # 매니페스트 레포지토리의 변경사항을 자동으로 감지하여 동기화를 수행합니다.
+      # 별도의 수동 동기화가 필요하지 않습니다.
