@@ -19,11 +19,11 @@ spec:
         - name: RDS_ENDPOINT
           valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: RDS_ENDPOINT } }
         - name: RDS_DB_NAME
-          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: RDS_DB_NAME } }
+          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: USER_DB_NAME } }     # <- 변경
         - name: DATASOURCE_USERNAME
-          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: RDS_USERNAME } }
+          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: USER_DB_USERNAME } }   # <- 변경
         - name: DATASOURCE_PASSWORD
-          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: RDS_PASSWORD } }
+          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: USER_DB_PASSWORD } }   # <- 변경
         - name: JWT_SECRET
           valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: JWT_SECRET } }
         - name: JWT_EXPIRATION_MS
