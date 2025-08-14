@@ -155,25 +155,10 @@ jobs:
           curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           chmod +x argocd-linux-amd64
           
-          # URL 검증 및 수정 (더 강력한 정리)
-          ARGOCD_URL="${{ secrets.ARGOCD_SERVER }}"
-          echo "Original ARGOCD_SERVER: $ARGOCD_URL"
+          # ArgoCD 로그인 (경로 제거)
+          ARGOCD_URL="http://a0fa9acba723e43c6b9bd0a34daa589e-3b703a91ce113926.elb.ap-northeast-2.amazonaws.com"
+          echo "Using ArgoCD URL: $ARGOCD_URL"
           
-          # 모든 잘못된 접두사 제거
-          ARGOCD_URL="${ARGOCD_URL#tcp///}"
-          ARGOCD_URL="${ARGOCD_URL#tcp//}"
-          ARGOCD_URL="${ARGOCD_URL#tcp/}"
-          ARGOCD_URL="${ARGOCD_URL#tcp}"
-          
-          # http://로 시작하지 않으면 추가
-          if [[ ! "$ARGOCD_URL" =~ ^https?:// ]]; then
-            ARGOCD_URL="http://$ARGOCD_URL"
-          fi
-          
-          echo "Cleaned ARGOCD_SERVER: $ARGOCD_URL"
-          
-          # ArgoCD 로그인
-          echo "Attempting to login to ArgoCD at: $ARGOCD_URL"
           ./argocd-linux-amd64 login "$ARGOCD_URL" \
             --username ${{ secrets.ARGOCD_USERNAME }} \
             --password ${{ secrets.ARGOCD_PASSWORD }} \
