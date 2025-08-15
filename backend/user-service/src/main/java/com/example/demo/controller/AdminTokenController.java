@@ -22,7 +22,7 @@ public class AdminTokenController {
   private final TokenService tokenService;
 
   /**
-   * HTTP DELETE /admin/tokens/{jti} 8/14 ci/cd test(user) last test 123123 LAST TEST
+   * HTTP DELETE /admin/tokens/{jti} 8/14 ci/cd test(user) last test 123123 LAST TEST123123
    * 해당 JTI를 화이트리스트에서 삭제하고, 블랙리스트에 기록합니다.
    */
   @DeleteMapping("/{jti}")
