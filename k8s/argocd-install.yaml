@@ -143,3 +143,4 @@ kind: ServiceAccount
 metadata:
   name: argocd-repo-server
   namespace: argocd
+

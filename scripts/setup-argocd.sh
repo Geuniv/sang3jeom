@@ -30,3 +30,4 @@ echo "Password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o js
 echo ""
 echo "Current ArgoCD applications:"
 kubectl get applications -n argocd
+
