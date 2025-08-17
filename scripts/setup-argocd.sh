@@ -31,3 +31,5 @@ echo ""
 echo "Current ArgoCD applications:"
 kubectl get applications -n argocd
 
+
+
