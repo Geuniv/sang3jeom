@@ -11,6 +11,7 @@ import replicate
 import boto3
 from botocore.exceptions import NoCredentialsError
 import re
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 load_dotenv()
 
@@ -29,6 +30,10 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 # }
 
 app = FastAPI()
+
+# Prometheus 메트릭 정의
+REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint'])
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency')
 
 app.add_middleware(
     CORSMiddleware,
@@ -86,11 +91,19 @@ def upload_to_s3(file_path, filename):
         print("AWS 자격증명 오류")
         return None
 
+@app.get("/metrics")
+async def metrics():
+    """Prometheus 메트릭 엔드포인트"""
+    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
+
 @app.post("/generate-character")
 async def generate_character(
     image: UploadFile = File(...),
     style: str = Form(...)
 ):
+    # 메트릭 수집 시작
+    REQUEST_COUNT.labels(method='POST', endpoint='/generate-character').inc()
+    
     file_id = str(uuid.uuid4())
     safe_filename = re.sub(r'[^a-zA-Z0-9_.-]', '_', image.filename)
     filename = f"{file_id}_{safe_filename}"

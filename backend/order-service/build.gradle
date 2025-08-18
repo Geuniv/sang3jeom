@@ -35,6 +35,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
 }
 
 tasks.named('test') {
