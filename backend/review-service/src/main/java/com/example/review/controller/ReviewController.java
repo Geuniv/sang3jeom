@@ -34,7 +34,7 @@ public class ReviewController {
      * 리뷰 생성
      * @param userId 게이트웨이에서 전달받은 사용자 ID
      * @param requestDTO 리뷰 내용, 별점, 이미지 URL, 주문 ID
-     * @return 생성 성공 시 200 OK
+     * @return 생성 성공 시 200 OK review ci/cd test
      */
     @PostMapping
     public ResponseEntity<Void> createReview(
