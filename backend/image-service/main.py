@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 import shutil
 import uuid
@@ -63,7 +63,7 @@ REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request laten
 
 @app.get("/metrics")
 def metrics():
-    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 # Replicate 기반 이미지 변환 함수
 def call_replicate_flux_kontext(image_url: str, prompt: str) -> str:
