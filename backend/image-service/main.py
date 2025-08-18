@@ -12,6 +12,7 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 import re
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 load_dotenv()
 
@@ -55,6 +56,14 @@ app.mount("/outputs", StaticFiles(directory=OUTPUT_DIR), name="outputs")
 
 REPLICATE_API_TOKEN = os.getenv("REPLICATE_API_TOKEN")
 os.environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
+
+# Prometheus metrics
+REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint'])
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency (seconds)')
+
+@app.get("/metrics")
+def metrics():
+    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
 # Replicate 기반 이미지 변환 함수
 def call_replicate_flux_kontext(image_url: str, prompt: str) -> str:
@@ -101,6 +110,7 @@ async def generate_character(
     image: UploadFile = File(...),
     style: str = Form(...)
 ):
+    REQUEST_COUNT.labels(method='POST', endpoint='/generate-character').inc()
     # 메트릭 수집 시작
     REQUEST_COUNT.labels(method='POST', endpoint='/generate-character').inc()
     
