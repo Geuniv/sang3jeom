@@ -13,8 +13,7 @@ spec:
       nodeSelector: { "eks.amazonaws.com/nodegroup": "s3j-node-app" }
       containers:
       - name: image-service
-        image: 806070027856.dkr.ecr.ap-northeast-2.amazonaws.com/sang3jeom/image-service:latest
-        imagePullPolicy: Always
+        image: ${ECR}/sang3jeom/image-service:latest
         ports: [ { containerPort: 8000 } ]
         env:
         - name: AWS_ACCESS_KEY

@@ -13,7 +13,7 @@ spec:
       nodeSelector: { "eks.amazonaws.com/nodegroup": "s3j-node-app" }
       containers:
       - name: review-service
-        image: 806070027856.dkr.ecr.ap-northeast-2.amazonaws.com/sang3jeom/review-service:latest
+        image: ${ECR}/sang3jeom/image-service:latest
         ports: [ { containerPort: 8084 } ]
         env:
         - name: RDS_ENDPOINT
