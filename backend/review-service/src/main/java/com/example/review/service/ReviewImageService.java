@@ -18,6 +18,7 @@ public class ReviewImageService {
 
     @Value("${cloud.aws.s3.bucket}")  // application.yaml에서 읽어오기
     private String bucket;
+    // ci test
     
     private final S3Presigner s3Presigner;
 

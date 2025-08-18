@@ -22,7 +22,7 @@ public class UserAiGoodsService {
     private final UserAiGoodsRepository aiGoodsRepository;
     private final UserRepository userRepository;
     private final S3Service s3Service;
-
+// ci test
     @Transactional
     public UserAiGoodsEntity saveAiGoods(Long userId, String goodsType, MultipartFile file) throws IOException {
         System.out.println("UserAiGoodsService.saveAiGoods 호출 - userId: " + userId + ", goodsType: " + goodsType);
