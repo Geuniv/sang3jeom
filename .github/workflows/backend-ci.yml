@@ -58,6 +58,7 @@ jobs:
     needs: determine-services # determine-services 작업이 성공해야 실행
     if: needs.determine-services.outputs.services != '[]' # 서비스 목록이 비어있지 않을 때만 실행
     strategy:
+      max-parallel: 2  # 최대 2개씩만 병렬 실행
       matrix:
         service: ${{ fromJson(needs.determine-services.outputs.services) }}
     runs-on: ubuntu-latest
@@ -136,7 +137,7 @@ jobs:
           # 동적으로 해당 서비스의 매니페스트 파일 경로를 지정하여 이미지 태그 업데이트
           echo "Updating image tag for ${{ env.SERVICE_NAME }} service..."
           yq e '(select(.kind == "Deployment") | .spec.template.spec.containers[0].image) = "${{ steps.login-ecr.outputs.registry }}/sang3jeom/${{ env.SERVICE_NAME }}:${{ env.IMAGE_TAG }}"' -i k8s-manifest-repo/charts/${{ env.SERVICE_NAME }}/service.yaml
-      # 9. Manifest 레포지토리에 변경사항 커밋 및 푸시
+      # 9. Manifest 레포지토리에 변경사항 커밋 및 푸시 (재시도 로직 포함)
       - name: Commit and push manifest changes
         run: |
           cd k8s-manifest-repo
@@ -144,8 +145,18 @@ jobs:
           git config --global user.email "actions@github.com"
           git add .
           git commit -m "Update image to ${{ env.IMAGE_TAG }} for ${{ env.SERVICE_NAME }}"
-          git push
-          echo "Successfully updated manifest for ${{ env.SERVICE_NAME }} service"
+          
+          # Git 푸시 재시도 로직 (충돌 방지)
+          for i in {1..5}; do
+            if git push; then
+              echo "Successfully pushed manifest changes for ${{ env.SERVICE_NAME }} service"
+              break
+            else
+              echo "Push failed, retrying in $((i*2)) seconds... (attempt $i/5)"
+              sleep $((i*2))
+              git pull --rebase
+            fi
+          done
           echo "ArgoCD will automatically detect the changes and sync the application"
 
       # ArgoCD는 GitOps 방식으로 작동하므로, 
