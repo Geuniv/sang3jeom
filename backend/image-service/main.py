@@ -12,7 +12,6 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 import re
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 load_dotenv()
 
@@ -32,9 +31,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 app = FastAPI()
 
-# Prometheus 메트릭 정의
-REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint'])
-REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency')
+# Prometheus 메트릭은 아래에서 안전하게 정의됩니다
 
 app.add_middleware(
     CORSMiddleware,
@@ -57,9 +54,17 @@ app.mount("/outputs", StaticFiles(directory=OUTPUT_DIR), name="outputs")
 REPLICATE_API_TOKEN = os.getenv("REPLICATE_API_TOKEN")
 os.environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
 
-# Prometheus metrics
-REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint'])
-REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency (seconds)')
+# Prometheus metrics - safe registration
+REQUEST_COUNT = None
+REQUEST_LATENCY = None
+
+try:
+    REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint'])
+    REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency (seconds)')
+except ValueError:
+    # Metrics already registered, skip registration
+    print("Prometheus metrics already registered, skipping...")
+    pass
 
 @app.get("/metrics")
 def metrics():
@@ -110,9 +115,9 @@ async def generate_character(
     image: UploadFile = File(...),
     style: str = Form(...)
 ):
-    REQUEST_COUNT.labels(method='POST', endpoint='/generate-character').inc()
-    # 메트릭 수집 시작
-    REQUEST_COUNT.labels(method='POST', endpoint='/generate-character').inc()
+    # 메트릭 수집 (안전하게 처리)
+    if REQUEST_COUNT is not None:
+        REQUEST_COUNT.labels(method='POST', endpoint='/generate-character').inc()
     
     file_id = str(uuid.uuid4())
     safe_filename = re.sub(r'[^a-zA-Z0-9_.-]', '_', image.filename)
