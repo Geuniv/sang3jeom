@@ -35,3 +35,6 @@ kubectl get applications -n argocd
 
 
 
+
+
+
