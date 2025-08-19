@@ -15,7 +15,7 @@ from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_
 
 load_dotenv()
 
-# HF_API_URL = os.getenv("HF_API_URL") ci/cd test citest6 8/18 test123 123 123
+# HF_API_URL = os.getenv("HF_API_URL") ci/cd test citest6 8/18 test123 123 123 819
 # HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 # ci 테스트
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", "./uploads")
