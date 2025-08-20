@@ -3,37 +3,64 @@ kind: Deployment
 metadata:
   name: order-service
   namespace: dev
-  labels: { app: order-service }
+  labels: {app: order-service}
 spec:
   replicas: 2
-  selector: { matchLabels: { app: order-service } }
+  strategy: # 추가
+    type: RollingUpdate # 추가
+    rollingUpdate: # 추가
+      maxUnavailable: 1 # 추가: 기존 Pod 1개 먼저 종료
+      maxSurge: 0 # 추가: 새 Pod 추가 없이 교체만
+  selector: {matchLabels: {app: order-service}}
   template:
-    metadata: { labels: { app: order-service } }
+    metadata: {labels: {app: order-service}}
     spec:
-      nodeSelector: { "eks.amazonaws.com/nodegroup": "s3j-node-app" }
+      nodeSelector: {"eks.amazonaws.com/nodegroup": "s3j-node-app"}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - order-service
+              topologyKey: kubernetes.io/hostname
       containers:
-      - name: order-service
-        image: ${ECR}/sang3jeom/order-service:latest
-        ports: [ { containerPort: 8082 } ]
-        env:
-        - name: ORDER_DB_URL
-          valueFrom: { configMapKeyRef: { name: sang3jeom-config, key: ORDER_DB_URL } }
-        - name: ORDER_DB_USERNAME
-          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: ORDER_DB_USERNAME } }
-        - name: ORDER_DB_PASSWORD
-          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: ORDER_DB_PASSWORD } }
-        - name: USER_SERVICE_URL
-          value: http://user-service.dev.svc.cluster.local:8080
-        - name: KAKAO_SECRET_KEY
-          valueFrom: { secretKeyRef: { name: sang3jeom-secrets, key: KAKAO_SECRET_KEY } }
+        - name: order-service
+          image: 806070027856.dkr.ecr.ap-northeast-2.amazonaws.com/sang3jeom/order-service:bc805b0967109d6287517364d8b82a2e0460fb50
+          ports: [{containerPort: 8082}]
+          env:
+            - name: ORDER_DB_URL
+              valueFrom: {configMapKeyRef: {name: sang3jeom-config, key: ORDER_DB_URL}}
+            - name: ORDER_DB_USERNAME
+              valueFrom: {secretKeyRef: {name: sang3jeom-secrets, key: ORDER_DB_USERNAME}}
+            - name: ORDER_DB_PASSWORD
+              valueFrom: {secretKeyRef: {name: sang3jeom-secrets, key: ORDER_DB_PASSWORD}}
+            - name: USER_SERVICE_URL
+              value: http://user-service.dev.svc.cluster.local:8080
+            - name: KAKAO_SECRET_KEY
+              valueFrom: {secretKeyRef: {name: sang3jeom-secrets, key: KAKAO_SECRET_KEY}}
+          readinessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 40
+            periodSeconds: 20
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: order-service
   namespace: dev
-  labels: { app: order-service }
+  labels: {app: order-service}
 spec:
-  selector: { app: order-service }
-  ports: [ { port: 8082, targetPort: 8082 } ]
-  type: ClusterIP 
+  selector: {app: order-service}
+  ports: [{port: 8082, targetPort: 8082}]
+  type: ClusterIP
