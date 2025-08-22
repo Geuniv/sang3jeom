@@ -167,8 +167,12 @@ const isValidName = (name) => name.trim().length >= 2;
                 <span className="text-gray-600">홈으로 돌아가기</span>
               </Link>
               
-              <div className="mx-auto h-12 w-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-xl">상</span>
+              <div className="mx-auto h-12 w-12 flex items-center justify-center mb-4">
+                <img 
+                  src="/logo-magic-dog.png" 
+                  alt="상상상점" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               
               <h2 className="text-3xl font-bold text-gray-900 mb-2">상상상점 회원가입</h2>

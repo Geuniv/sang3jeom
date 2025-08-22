@@ -90,11 +90,15 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <motion.div
-              className="w-11 h-11 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white group-hover:scale-105 transition-transform"
+              className="w-11 h-11 flex items-center justify-center group-hover:scale-105 transition-transform"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.97 }}
             >
-              <span className="text-white font-bold text-2xl tracking-tight">상</span>
+              <img 
+                src="/logo-magic-dog.png" 
+                alt="상상상점" 
+                className="w-full h-full object-contain"
+              />
             </motion.div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-extrabold text-gray-900 tracking-tight leading-tight">상상상점</h1>

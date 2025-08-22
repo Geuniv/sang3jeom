@@ -150,16 +150,16 @@ const Home = () => {
         </div>
         
         <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
-                      <motion.h1 
-              className="text-5xl md:text-7xl font-bold mb-6"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              상상상점에서
-              <br />
-              <span className="text-yellow-300">굿즈로 변신</span>시키는 마법!
-            </motion.h1>
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            상상상점에서
+            <br />
+            <span className="text-yellow-300">굿즈로 변신</span>시키는 마법!
+          </motion.h1>
           
           <motion.p 
             className="text-xl md:text-2xl mb-8 opacity-90"
@@ -385,7 +385,14 @@ const Home = () => {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-4">상상상점</h3>
+              <div className="flex items-center space-x-2 mb-4">
+                <img
+                  src="/logo-magic-dog.png"
+                  alt="상상상점"
+                  className="w-10 h-10 object-contain"
+                />
+                <h3 className="text-2xl font-bold">상상상점</h3>
+              </div>
               <p className="text-gray-400 mb-4">
                 All in one for GOODS Production
               </p>
