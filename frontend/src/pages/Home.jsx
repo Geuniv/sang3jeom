@@ -156,9 +156,9 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            상상상점에서
+            소중한 반려동물,
             <br />
-            <span className="text-yellow-300">굿즈로 변신</span>시키는 마법!
+            <span className="text-yellow-300">나만의 </span>굿즈로
           </motion.h1>
           
           <motion.p 
@@ -167,7 +167,7 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            AI 캐릭터 생성부터 굿즈 제작까지, 모든 과정을 한 번에!
+            AI로 만드는 세상에 하나뿐인 반려동물 캐릭터 굿즈로 추억을 영원히 간직하세요.
           </motion.p>
           
           <motion.div 
@@ -182,7 +182,7 @@ const Home = () => {
               whileTap={{ scale: 0.95 }}
               onClick={() => requireLogin(() => navigate('/character-maker'))}
             >
-              AI 캐릭터 만들기
+              AI 캐릭터 생성
             </motion.button>
             <motion.button 
               className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
@@ -190,7 +190,7 @@ const Home = () => {
               whileTap={{ scale: 0.95 }}
               onClick={() => requireLogin(() => navigate('/goods-maker'))}
             >
-              굿즈 제작하기
+              굿즈 주문하기
             </motion.button>
           </motion.div>
         </div>
