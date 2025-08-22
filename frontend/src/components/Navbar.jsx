@@ -52,8 +52,6 @@ const Navbar = () => {
     { name: '상상공간', path: '/community', icon: Users, requiresAuth: false },
   ];
 
-  const avatarUrl = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face';
-
   const logout = useLogout(setIsLoggedIn);
 
   // 로딩 중일 때는 스켈레톤 UI 표시
@@ -146,7 +144,9 @@ const Navbar = () => {
                   className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
                   onClick={() => setShowDropdown((v) => !v)}
                 >
-                  <img src={avatarUrl} alt="마이페이지" className="w-8 h-8 rounded-full border-2 border-blue-400 shadow" />
+                  <div className="w-8 h-8 rounded-full border-2 border-blue-400 shadow bg-blue-50 flex items-center justify-center">
+                    <span className="text-blue-600 text-lg">👤</span>
+                  </div>
                   <span className="font-semibold text-gray-800">마이페이지</span>
                   <ChevronDown className="w-4 h-4 text-gray-400" />
                 </button>
@@ -248,7 +248,9 @@ const Navbar = () => {
                   </>
                 ) : (
                   <div className="flex items-center space-x-3 px-3 py-3">
-                    <img src={avatarUrl} alt="마이페이지" className="w-8 h-8 rounded-full border-2 border-blue-400 shadow" />
+                    <div className="w-8 h-8 rounded-full border-2 border-blue-400 shadow bg-blue-50 flex items-center justify-center">
+                      <span className="text-blue-600 text-lg">👤</span>
+                    </div>
                     <span className="font-semibold text-gray-800">마이페이지</span>
                   </div>
                 )}
