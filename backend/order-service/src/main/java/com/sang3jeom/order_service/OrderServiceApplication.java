@@ -16,7 +16,7 @@ public class OrderServiceApplication {
         SpringApplication.run(OrderServiceApplication.class, args);
     }
 
-    // === CORS 전역 허용 설정 추가 === 시연영상 촬영중
+    // === CORS 전역 허용 설정 추가 === 시연영상 촬영중 123
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
