@@ -135,7 +135,7 @@ jobs:
           sudo chmod +x /usr/bin/yq
           # 동적으로 해당 서비스의 매니페스트 파일 경로를 지정하여 이미지 태그 업데이트
           echo "Updating image tag for ${{ env.SERVICE_NAME }} service..."
-          yq e '.spec.template.spec.containers[0].image = "${{ steps.login-ecr.outputs.registry }}/sang3jeom/${{ env.SERVICE_NAME }}:${{ env.IMAGE_TAG }}"' -i k8s-manifest-repo/charts/${{ env.SERVICE_NAME }}/service.yaml
+          yq e '(select(.kind == "Deployment") | .spec.template.spec.containers[0].image) = "${{ steps.login-ecr.outputs.registry }}/sang3jeom/${{ env.SERVICE_NAME }}:${{ env.IMAGE_TAG }}"' -i k8s-manifest-repo/charts/${{ env.SERVICE_NAME }}/service.yaml
       # 9. Manifest 레포지토리에 변경사항 커밋 및 푸시
       - name: Commit and push manifest changes
         run: |
