@@ -35,3 +35,4 @@ public class ReviewApplication {
 	}
 
 }
+// 8/23 CI/CD 시연

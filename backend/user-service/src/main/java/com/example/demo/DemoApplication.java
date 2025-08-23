@@ -14,3 +14,4 @@ public class DemoApplication {
 	}
 
 }
+// 8/23 CI/CD 시연
