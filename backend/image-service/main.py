@@ -17,7 +17,7 @@ load_dotenv()
 
 # HF_API_URL = os.getenv("HF_API_URL") ci/cd test citest6 8/18 test123 123 123 819123123 321
 # HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
-#8/23 CI/CD 시연 123333
+#시연영상 촬영중
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", "./uploads")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./outputs")
 

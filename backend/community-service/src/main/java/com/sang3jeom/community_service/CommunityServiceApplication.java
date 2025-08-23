@@ -15,7 +15,7 @@ public class CommunityServiceApplication {
 		SpringApplication.run(CommunityServiceApplication.class, args);
 	}
 
-	// === CORS 전역 허용 설정 추가 8/23 CI/CD 시연 12333
+	// === CORS 전역 허용 설정 추가 시연영상 촬영중
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {

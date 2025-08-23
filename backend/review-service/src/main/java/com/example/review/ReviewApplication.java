@@ -35,4 +35,4 @@ public class ReviewApplication {
 	}
 
 }
-// 8/23 CI/CD 시연 12333
+// 시연영상 촬영중
