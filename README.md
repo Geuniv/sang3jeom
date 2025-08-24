@@ -1,12 +1,15 @@
-<<<<<<< HEAD
 # 상상상점 (Sang3Jeom)
 
 반려동물 사진을 업로드하면 AI가 캐릭터로 변환해주는 굿즈 제작 플랫폼입니다.
 
-## 구조
-- 프론트: React + Tailwind
+## 기술 스택 및 구조
+- 프론트엔드: React (JavaScript) + Tailwind
 - 백엔드: Spring Boot, FastAPI (AI), 기타 서비스 분리
-- 인프라: AWS, Docker, Kubernetes, GitHub Actions 
+- AI 모델: Hugging Face 기반 이미지 생성 모델
+- 인프라: AWS, Docker, Kubernetes, GitHub Actions
+- CI/CD 및 컨테이너: Docker, GitHub Actions, ECR, argoCD
+- 아키텍처: MSA (Microservice Architecture) 기반 애플리케이션 서비스 구성
+
 =======
 # React + Vite
 
